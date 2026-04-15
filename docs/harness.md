@@ -1,7 +1,7 @@
 # Harness
 
 The runtime is a thin loop between the model and the filesystem.
-Seven mechanisms compose the entire system.
+Eight mechanisms compose the entire system.
 
 ## Mechanisms
 
@@ -24,6 +24,13 @@ Output lands in `_output/`.
 The `_run/` directory is consumed after execution to prevent re-runs.
 Background processes are killed when the script finishes.
 Scripts can declare their own timeout with `# timeout: <seconds>`.
+
+### Commit
+
+After applying the diff and running any scripts,
+`git add -A` and `git commit`. Every turn is a checkpoint.
+The commit log is the session history.
+Rollback is always one `git revert` away.
 
 ### Survey
 
