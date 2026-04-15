@@ -1,0 +1,7 @@
+node_modules/
+dist/
+workspace/
+.git/
+docs/
+*.md
+!agent.md
