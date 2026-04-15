@@ -33,15 +33,16 @@ The world state is preserved. The history is not.
 
 ## Docs
 
-- [Architecture](docs/architecture.md) — context as diffs, compression, grafting
-- [Context](docs/context.md) — what the model sees, the prompt structure
-- [Grafting](docs/grafting.md) — context compression by flattening
-- [Agent](docs/agent.md) — the system identity file
-- [Harness](docs/harness.md) — the seven mechanisms and the runtime loop
-- [Diffs](docs/diffs.md) — why unified diffs as the protocol
-- [Execution](docs/execution.md) — script conventions, process isolation, capabilities
-- [Survey](docs/survey.md) — workspace observation, visibility control, context pressure
-- [Docker](docs/docker.md) — container setup, environment, usage
+- [Architecture](architecture.md) — context as diffs, compression, grafting
+- [Context](context.md) — what the model sees, the prompt structure
+- [Grafting](grafting.md) — context compression by flattening
+- [Agent](agent.md) — the system identity file
+- [Harness](harness.md) — the seven mechanisms and the runtime loop
+- [Diffs](diffs.md) — why unified diffs as the protocol
+- [Execution](execution.md) — script conventions, process isolation, capabilities
+- [Survey](survey.md) — workspace observation, visibility control, context pressure
+- [Docker](docker.md) — container setup, environment, usage
+- [Config](config.md) — environment variables and hard-coded defaults
 
 ## Development
 
