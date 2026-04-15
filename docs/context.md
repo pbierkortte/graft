@@ -7,44 +7,51 @@ What it receives is the same format as what it produces.
 
 The context window is assembled in this order:
 
-1. Agent file as an addition diff
-2. Supporting documents as addition diffs
-3. All workspace files as addition diffs
-4. User file as a patch
+1. System prompt: agent file content + workspace survey
+2. Conversation history (user and assistant messages)
 
-Every section is a valid unified diff.
-The model reads diffs and writes diffs.
-There is no mode switch between input and output.
+The system prompt is rebuilt every turn.
+History is compressed as it grows (see below).
 
 ## Agent File
 
-The first thing in the context.
-Always formatted as an addition from `/dev/null`.
+The first thing in the system prompt.
 Contains the system identity, instructions, and constraints.
+Read from `GRAFT_AGENT` (default `./agent.md`).
+If the file is missing, a built-in default is used
+that defines the diff-only response format and execution conventions.
 
-## Supporting Documents
+## Workspace Survey
 
-Reference material the model needs to do its work.
-Each is an addition from `/dev/null`.
-These provide grounding without being part of the workspace.
+Appended to the system prompt after the agent file.
+A text snapshot of every tracked and untracked file
+produced by `git ls-files`. Rebuilt every turn
+so the model always sees ground truth.
 
-## Workspace Files
+## User Input
 
-Every file in the current workspace expressed as an addition.
-This is the ground truth of what exists on disk.
-The model sees everything as if it were freshly created.
+User messages are natural language, not diffs.
+They are pushed directly into the conversation history.
+The model receives them as-is.
 
-## User File
+During grafting (context compression), all user messages
+are joined into a session transcript and re-expressed
+as a single diff addition. This is the only time
+user input becomes a diff.
 
-The last thing in the context.
-Contains accumulated user input from the session.
-Formatted as a patch showing what was said before
-plus what is being said now.
+## Assistant Messages
 
-If the user provides multiple inputs over time,
-each new input extends the file via a hunk
-that adds lines to the end.
+Each assistant response (a unified diff) is stored in history
+with the current workspace survey appended.
+This means the model can see what the workspace looked like
+after each of its own actions.
 
-The user file is always last
-so the model reads its identity and context first,
-then sees the current request.
+## History Compression
+
+When the conversation has more than `GRAFT_HISTORY` (default 20)
+assistant messages, older assistant messages have their
+appended workspace surveys stripped and replaced with
+`[workspace survey omitted]`. Message count stays the same;
+content shrinks.
+
+This is distinct from grafting, which replaces the entire history.
