@@ -21,12 +21,9 @@ docker run -it -e OPENAI_API_KEY=sk-... graft
 
 ## How It Works
 
-The model's entire context is a sequence of unified diffs.
-First it sees its agent file as an addition.
-Then supporting docs as additions.
-Then every workspace file as an addition.
-Then the user's accumulated input as a patch.
-
+The system prompt contains the agent file and a workspace survey.
+The conversation history holds user messages (natural language)
+and assistant messages (unified diffs).
 When context fills up, graft: flatten everything
 to fresh additions and continue.
 The world state is preserved. The history is not.
@@ -37,7 +34,7 @@ The world state is preserved. The history is not.
 - [Context](context.md) — what the model sees, the prompt structure
 - [Grafting](grafting.md) — context compression by flattening
 - [Agent](agent.md) — the system identity file
-- [Harness](harness.md) — the seven mechanisms and the runtime loop
+- [Harness](harness.md) — the eight mechanisms and the runtime loop
 - [Diffs](diffs.md) — why unified diffs as the protocol
 - [Execution](execution.md) — script conventions, process isolation, capabilities
 - [Survey](survey.md) — workspace observation, visibility control, context pressure
