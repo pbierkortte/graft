@@ -6,7 +6,7 @@ const env = (key: string, fallback: string): string =>
 export const config = {
   workspace: resolve(env('GRAFT_WORKSPACE', './workspace')),
   agentFile: resolve(env('GRAFT_AGENT', './agent.md')),
-  model: env('GRAFT_MODEL', 'gpt-4o'),
+  model: env('GRAFT_MODEL', 'gpt-5-mini'),
   apiKey: env('OPENAI_API_KEY', ''),
   apiBase: env('OPENAI_API_BASE', 'https://api.openai.com/v1'),
   execTimeout: parseInt(env('GRAFT_TIMEOUT', '30'), 10),

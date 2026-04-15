@@ -10,7 +10,7 @@ No config files. No CLI flags.
 |---|---|---|
 | `GRAFT_WORKSPACE` | `./workspace` | Working directory. Must be or become a git repo. |
 | `GRAFT_AGENT` | `./agent.md` | System identity file. Falls back to built-in default if missing. |
-| `GRAFT_MODEL` | `gpt-4o` | Model name sent to the API. |
+| `GRAFT_MODEL` | `gpt-5-mini` | Model name sent to the API. |
 | `OPENAI_API_KEY` | _(empty)_ | API key. Required for any LLM call. |
 | `OPENAI_API_BASE` | `https://api.openai.com/v1` | Base URL. Any OpenAI-compatible endpoint works. |
 | `GRAFT_TIMEOUT` | `30` | Default script execution timeout in seconds. |
@@ -37,7 +37,7 @@ OPENAI_API_KEY=sk-... node dist/index.js
 # OpenRouter
 OPENAI_API_KEY=$OPENROUTER_API_KEY \
 OPENAI_API_BASE=https://openrouter.ai/api/v1 \
-GRAFT_MODEL=openai/gpt-4o \
+GRAFT_MODEL=openai/gpt-5-mini \
 node dist/index.js
 
 # Local (e.g. ollama)

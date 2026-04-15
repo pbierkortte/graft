@@ -27,7 +27,7 @@ Each session starts with an empty repo.
 |---|---|---|
 | `OPENAI_API_KEY` | (none) | Required. API key for the LLM. |
 | `OPENAI_API_BASE` | `https://api.openai.com/v1` | API endpoint. Any OpenAI-compatible API works. |
-| `GRAFT_MODEL` | `gpt-4o` | Model name. |
+| `GRAFT_MODEL` | `gpt-5-mini` | Model name. |
 | `GRAFT_WORKSPACE` | `./workspace` | Workspace directory inside container. |
 | `GRAFT_AGENT` | `./agent.md` | Path to the agent file. |
 | `GRAFT_TIMEOUT` | `30` | Default script timeout in seconds. |
@@ -54,7 +54,7 @@ that implements the `/v1/chat/completions` endpoint:
 docker run -it \
   -e OPENAI_API_KEY=$OPENROUTER_API_KEY \
   -e OPENAI_API_BASE=https://openrouter.ai/api/v1 \
-  -e GRAFT_MODEL=openai/gpt-4o \
+  -e GRAFT_MODEL=openai/gpt-5-mini \
   graft
 ```
 

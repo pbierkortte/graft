@@ -42,7 +42,7 @@ Call another model:
 ```bash
 curl -s https://api.openai.com/v1/chat/completions \
   -H "Authorization: Bearer $OPENAI_API_KEY" \
-  -d '{"model":"gpt-4o","messages":[...]}' > response.json
+  -d '{"model":"gpt-5-mini","messages":[...]}' > response.json
 ```
 
 ## Process Isolation
