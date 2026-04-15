@@ -22,9 +22,15 @@ and downstream on the disk.
 The agent file shapes the upstream.
 The harness is just the wire between them.
 
+## Fallback
+
+If the agent file is missing, a built-in `DEFAULT_AGENT` in
+`src/context.ts` provides minimal instructions: diff format rules,
+execution conventions, and the silence-means-done contract.
+This lets the system run without any external files.
+
 ## Format
 
 The agent file is a plain text document.
 It can contain instructions, personality, constraints, examples.
-It is delivered to the model as an addition diff
-at the start of the context window.
+It is delivered to the model as part of the system prompt.
