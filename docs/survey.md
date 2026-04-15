@@ -23,6 +23,12 @@ node_modules/
 model.pt
 ```
 
+## Truncation
+
+Files larger than 5KB are truncated in the survey:
+first 2000 characters, then `[…truncated, N bytes total…]`,
+then last 500 characters. Binary files show only their name and size.
+
 ## Context Pressure
 
 The survey is embedded in the system prompt.
