@@ -14,3 +14,4 @@ The filesystem is state. Git is memory. Bash is the universal tool.
 - [Diffs](diffs.md) — why unified diffs as the protocol
 - [Execution](execution.md) — script conventions, process isolation, capabilities
 - [Survey](survey.md) — workspace observation, visibility control, context pressure
+- [Docker](docker.md) — container setup, environment, usage
