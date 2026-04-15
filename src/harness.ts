@@ -7,6 +7,7 @@ import { llm, type Message } from './llm.js'
 import { isDiff, applyDiff, gitCommit, NUDGE } from './diff.js'
 import { runMagic } from './execute.js'
 import { buildMessages, amendWithSurvey } from './context.js'
+import { shouldGraft, graftHistory } from './graft.js'
 
 const validatedLlm = async (messages: readonly Message[]): Promise<string> => {
   for (let i = 0; i < config.maxRetries; i++) {
@@ -72,6 +73,13 @@ export const main = async (): Promise<void> => {
     history.push({ role: 'user', content: userInput })
 
     for (let turn = 0; turn < config.maxInner; turn++) {
+      if (shouldGraft(history)) {
+        console.log('[grafting — compressing context]')
+        const { history: grafted } = graftHistory(history, '')
+        history.length = 0
+        history.push(...grafted)
+      }
+
       const messages = buildMessages(history)
 
       let response: string
