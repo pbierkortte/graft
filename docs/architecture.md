@@ -8,19 +8,16 @@ The same format it produces is the format it consumes.
 
 ## Context Structure
 
-The model sees files in this order:
+The system prompt contains:
 
-1. **Agent file** — system identity and instructions (first, always an addition)
-2. **Supporting docs** — README, reference material (additions)
-3. **Workspace files** — all current files in the project (additions)
-4. **User file** — accumulated user input from the session (patch format)
+1. **Agent file** — system identity and instructions
+2. **Workspace survey** — text snapshot of all tracked/untracked files
 
-## User Input Accumulation
+The conversation history contains user messages (natural language)
+and assistant messages (unified diffs with workspace surveys appended).
 
-Each interaction appends to a single user file.
-Multiple inputs within a session grow the file incrementally.
-The user file is formatted as a patch showing the latest addition
-against what came before.
+During grafting, the entire history is replaced with a single message
+where every file is re-expressed as a fresh addition.
 
 ## Compression (Grafting)
 
