@@ -26,7 +26,7 @@ Each session starts with an empty repo.
 | Variable | Default | Purpose |
 |---|---|---|
 | `OPENAI_API_KEY` | (none) | Required. API key for the LLM. |
-| `OPENAI_API_BASE` | `https://api.openai.com/v1` | API endpoint. |
+| `OPENAI_API_BASE` | `https://api.openai.com/v1` | API endpoint. Any OpenAI-compatible API works. |
 | `GRAFT_MODEL` | `gpt-4o` | Model name. |
 | `GRAFT_WORKSPACE` | `./workspace` | Workspace directory inside container. |
 | `GRAFT_AGENT` | `./agent.md` | Path to the agent file. |
@@ -41,6 +41,20 @@ Mount a volume to keep the workspace across runs:
 docker run -it \
   -e OPENAI_API_KEY=sk-... \
   -v $(pwd)/my-workspace:/graft/workspace \
+  graft
+```
+
+## OpenAI-Compatible Providers
+
+Works with OpenRouter, Azure OpenAI, local servers, or any provider
+that implements the `/v1/chat/completions` endpoint:
+
+```bash
+# OpenRouter
+docker run -it \
+  -e OPENAI_API_KEY=$OPENROUTER_API_KEY \
+  -e OPENAI_API_BASE=https://openrouter.ai/api/v1 \
+  -e GRAFT_MODEL=openai/gpt-4o \
   graft
 ```
 
