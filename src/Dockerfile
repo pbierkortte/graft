@@ -1,4 +1,12 @@
-FROM node:22-slim
+FROM node:24-slim AS builder
+
+WORKDIR /graft
+COPY package.json ./
+RUN npm install
+COPY src/ src/
+RUN npm run build
+
+FROM node:24-slim AS runtime
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends git curl jq bash \
@@ -7,10 +15,8 @@ RUN apt-get update \
  && git config --global user.name "graft"
 
 WORKDIR /graft
-COPY package.json package-lock.json ./
-RUN npm ci --production=false
-COPY tsconfig.json agent.md ./
-COPY src/ src/
-RUN npm run build
+COPY package.json ./
+RUN npm install --omit=dev
+COPY --from=builder /graft/dist/ dist/
 
 CMD ["node", "dist/index.js"]

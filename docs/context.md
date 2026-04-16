@@ -17,7 +17,7 @@ History is compressed as it grows (see below).
 
 The first thing in the system prompt.
 Contains the system identity, instructions, and constraints.
-Read from `GRAFT_AGENT` (default `./agent.md`).
+Read from `GRAFT_AGENT` (default `./src/agent.md`).
 If the file is missing, a built-in default is used
 that defines the diff-only response format and execution conventions.
 

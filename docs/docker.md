@@ -5,10 +5,10 @@ Run Graft in a container.
 ## Build
 
 ```bash
-docker build -t graft .
+docker build -f src/Dockerfile -t graft .
 ```
 
-Image is based on `node:22-slim`.
+Image is based on `node:24-slim`.
 Includes git, curl, jq, bash.
 TypeScript compiles during build.
 
@@ -29,7 +29,7 @@ Each session starts with an empty repo.
 | `OPENAI_API_BASE` | `https://api.openai.com/v1` | API endpoint. Any OpenAI-compatible API works. |
 | `GRAFT_MODEL` | `gpt-5-mini` | Model name. |
 | `GRAFT_WORKSPACE` | `./workspace` | Workspace directory inside container. |
-| `GRAFT_AGENT` | `./agent.md` | Path to the agent file. |
+| `GRAFT_AGENT` | `./src/agent.md` | Path to the agent file. |
 | `GRAFT_TIMEOUT` | `30` | Default script timeout in seconds. |
 | `GRAFT_HISTORY` | `20` | Turns before workspace surveys compress. |
 
@@ -71,9 +71,9 @@ docker run -it \
 
 ## What's in the Image
 
-- Node.js 22
+- Node.js 24
 - git (for workspace, diff apply, commits)
 - curl, jq (available to _run/ scripts)
 - bash (script execution)
 - Compiled TypeScript in `/graft/dist/`
-- Default agent file at `/graft/agent.md`
+- No agent file bundled — mount one at runtime (see Custom Agent above)
