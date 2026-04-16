@@ -3,16 +3,16 @@ import { readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { config } from './config.js'
 
-export const survey = (): string => {
+export const survey = (workspace: string = config.workspace): string => {
   const result = execSync(
     'git ls-files --cached --others --exclude-standard',
-    { cwd: config.workspace, encoding: 'utf-8' }
+    { cwd: workspace, encoding: 'utf-8' }
   )
 
   const parts: string[] = []
 
   for (const rel of result.trim().split('\n').filter(Boolean).sort()) {
-    const path = join(config.workspace, rel)
+    const path = join(workspace, rel)
 
     try {
       const stat = statSync(path)

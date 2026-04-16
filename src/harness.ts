@@ -29,13 +29,13 @@ const validatedLlm = async (messages: readonly Message[]): Promise<string> => {
   return ''
 }
 
-const bootstrap = (): void => {
-  mkdirSync(config.workspace, { recursive: true })
+export const bootstrap = (workspace: string = config.workspace): void => {
+  mkdirSync(workspace, { recursive: true })
 
-  if (!existsSync(join(config.workspace, '.git'))) {
-    execSync('git init', { cwd: config.workspace, stdio: 'pipe' })
+  if (!existsSync(join(workspace, '.git'))) {
+    execSync('git init', { cwd: workspace, stdio: 'pipe' })
     execSync('git commit --allow-empty -m "init"', {
-      cwd: config.workspace,
+      cwd: workspace,
       stdio: 'pipe',
     })
   }
