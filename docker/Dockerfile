@@ -1,8 +1,8 @@
 FROM node:22-slim AS builder
 
 WORKDIR /graft
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json ./
+RUN npm install
 COPY src/ src/
 RUN npm run build
 
@@ -15,8 +15,8 @@ RUN apt-get update \
  && git config --global user.name "graft"
 
 WORKDIR /graft
-COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+COPY package.json ./
+RUN npm install --omit=dev
 COPY --from=builder /graft/dist/ dist/
 
 CMD ["node", "dist/index.js"]
