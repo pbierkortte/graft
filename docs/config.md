@@ -9,7 +9,7 @@ No config files. No CLI flags.
 | Variable | Default | Purpose |
 |---|---|---|
 | `GRAFT_WORKSPACE` | `./workspace` | Working directory. Must be or become a git repo. |
-| `GRAFT_AGENT` | `./agent.md` | System identity file. Falls back to built-in default if missing. |
+| `GRAFT_AGENT` | `./src/agent.md` | System identity file. Falls back to built-in default if missing. |
 | `GRAFT_MODEL` | `gpt-5-mini` | Model name sent to the API. |
 | `OPENAI_API_KEY` | _(empty)_ | API key. Required for any LLM call. |
 | `OPENAI_API_BASE` | `https://api.openai.com/v1` | Base URL. Any OpenAI-compatible endpoint works. |

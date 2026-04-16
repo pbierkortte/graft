@@ -29,7 +29,7 @@ Each session starts with an empty repo.
 | `OPENAI_API_BASE` | `https://api.openai.com/v1` | API endpoint. Any OpenAI-compatible API works. |
 | `GRAFT_MODEL` | `gpt-5-mini` | Model name. |
 | `GRAFT_WORKSPACE` | `./workspace` | Workspace directory inside container. |
-| `GRAFT_AGENT` | `./agent.md` | Path to the agent file. |
+| `GRAFT_AGENT` | `./src/agent.md` | Path to the agent file. |
 | `GRAFT_TIMEOUT` | `30` | Default script timeout in seconds. |
 | `GRAFT_HISTORY` | `20` | Turns before workspace surveys compress. |
 
