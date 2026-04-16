@@ -4,4 +4,3 @@ workspace/
 .git/
 docs/
 *.md
-!agent.md
