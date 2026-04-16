@@ -1,4 +1,4 @@
-FROM node:22-slim AS builder
+FROM node:24-slim AS builder
 
 WORKDIR /graft
 COPY package.json ./
@@ -6,7 +6,7 @@ RUN npm install
 COPY src/ src/
 RUN npm run build
 
-FROM node:22-slim AS runtime
+FROM node:24-slim AS runtime
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends git curl jq bash \
