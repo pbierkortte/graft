@@ -115,7 +115,7 @@ export const main = async (): Promise<void> => {
 
       history.push({
         role: 'assistant',
-        content: amendWithSurvey(response),
+        content: amendWithSurvey(response, config.workspace),
       })
 
       if (!ran) break

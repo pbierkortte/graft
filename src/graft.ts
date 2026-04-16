@@ -6,7 +6,7 @@ import { fileAsAddition } from './context.js'
 import type { Message } from './llm.js'
 
 const estimateTokens = (text: string): number =>
-  Math.ceil(text.length / 4)
+  text.match(/\S+|\s+/g)?.length ?? 0
 
 const workspaceFiles = (): { path: string; content: string }[] => {
   const result = execSync(

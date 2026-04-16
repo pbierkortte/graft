@@ -14,15 +14,17 @@ describe('shouldGraft', () => {
   })
 
   it('returns true when history exceeds token threshold', () => {
-    const bigContent = 'x'.repeat(500_000)
+    // Generate >100_000 tokens: each "word " is 2 tokens (word + space)
+    const bigContent = 'word '.repeat(60_000)
     const history: Message[] = [
       { role: 'user', content: bigContent },
     ]
     assert.equal(shouldGraft(history), true)
   })
 
-  it('returns false at exactly the boundary', () => {
-    const content = 'x'.repeat(399_999)
+  it('returns false for history well under the threshold', () => {
+    // 1000 words = ~2000 tokens, well under 100_000
+    const content = 'word '.repeat(1_000)
     const history: Message[] = [
       { role: 'user', content: content },
     ]

@@ -1,9 +1,17 @@
 import { readFileSync, existsSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import { config } from './config.js'
 import { survey } from './survey.js'
 import type { Message } from './llm.js'
 
 const SURVEY_MARKER = '\n\n[workspace]\n'
+
+export let lastSurveyHash = ''
+
+export const resetSurveyHash = (): void => { lastSurveyHash = '' }
+
+const hashSurvey = (text: string): string =>
+  createHash('sha256').update(text).digest('hex').slice(0, 16)
 
 const fileAsAddition = (path: string, content: string): string => {
   const lines = content.split('\n')
@@ -75,7 +83,14 @@ export const buildMessages = (history: Message[]): Message[] => [
   ...compressHistory(history),
 ]
 
-export const amendWithSurvey = (response: string): string =>
-  response + SURVEY_MARKER + survey()
+export const amendWithSurvey = (response: string, workspace?: string): string => {
+  const ws = survey(workspace)
+  const hash = hashSurvey(ws)
+  if (hash === lastSurveyHash) {
+    return response + SURVEY_MARKER + '[workspace unchanged]'
+  }
+  lastSurveyHash = hash
+  return response + SURVEY_MARKER + ws
+}
 
 export { SURVEY_MARKER, fileAsAddition }
