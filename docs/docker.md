@@ -5,7 +5,7 @@ Run Graft in a container.
 ## Build
 
 ```bash
-docker build -f docker/Dockerfile -t graft .
+docker build -f src/Dockerfile -t graft .
 ```
 
 Image is based on `node:22-slim`.
