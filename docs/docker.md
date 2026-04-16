@@ -77,3 +77,34 @@ docker run -it \
 - bash (script execution)
 - Compiled TypeScript in `/graft/dist/`
 - No agent file bundled — mount one at runtime (see Custom Agent above)
+
+## Security
+
+The container runs as a non-root user (`graft`, uid 1000) by default.
+
+Drop all Linux capabilities for additional hardening:
+
+```bash
+docker run -it \
+  --cap-drop=ALL \
+  -e OPENAI_API_KEY=sk-... \
+  graft
+```
+
+### Threat Model
+
+The LLM creates arbitrary shell scripts that execute inside the container with
+access to the mounted workspace and any environment variables passed in.
+The `_run/` convention is a feature, not a security boundary.
+
+Mitigations in place:
+- Non-root user — limits damage from container escape bugs
+- `--cap-drop=ALL` — removes privilege escalation vectors
+
+Mitigations **not** in place (and out of scope for this image):
+- Network isolation — scripts can reach the internet via `curl`, etc.
+- Read-only filesystem — the workspace must be writable
+- Namespace sandboxing — scripts share the container's PID/mount namespace
+
+If you need stronger isolation, run the container with a seccomp profile,
+inside a VM, or behind a network policy that limits egress.
