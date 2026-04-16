@@ -15,7 +15,7 @@ OPENAI_API_KEY=sk-... node dist/index.js
 Or with Docker:
 
 ```bash
-docker build -t graft .
+docker build -f src/Dockerfile -t graft .
 docker run -it -e OPENAI_API_KEY=sk-... graft
 ```
 
