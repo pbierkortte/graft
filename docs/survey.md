@@ -41,6 +41,15 @@ Use `.gitignore` to hide what the model does not need.
 Use scripts to pull in external resources
 rather than keeping everything in the tree.
 
+## Deduplication
+
+The survey is hashed after each turn.
+If the workspace has not changed, the next assistant message
+receives `[workspace unchanged]` instead of the full survey.
+This eliminates redundant token spend when the workspace is stable.
+
+When the workspace changes, the full survey is included again automatically.
+
 ## Compression
 
 Workspace surveys from older messages are stripped

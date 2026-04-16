@@ -15,6 +15,7 @@ No config files. No CLI flags.
 | `OPENAI_API_BASE` | `https://api.openai.com/v1` | Base URL. Any OpenAI-compatible endpoint works. |
 | `GRAFT_TIMEOUT` | `30` | Default script execution timeout in seconds. |
 | `GRAFT_HISTORY` | `20` | Number of recent assistant messages that keep full workspace surveys. |
+| `GRAFT_STREAM` | `true` | Stream LLM output token-by-token to stderr. Set to `false` to disable. |
 
 ## Hard-Coded Values
 
@@ -25,7 +26,7 @@ No config files. No CLI flags.
 | `temperature` | `0.7` | `llm.ts` | LLM sampling temperature. |
 | `AbortSignal.timeout` | `120000` | `llm.ts` | HTTP request timeout (2 minutes). |
 | `shouldGraft` threshold | `100000` | `graft.ts` | Token estimate above which grafting triggers. |
-| Token estimate | `text.length / 4` | `graft.ts` | Rough char-to-token ratio. |
+| Token estimate | word/whitespace split | `graft.ts` | Regex-based token approximation (`/\S+|\s+/g`). |
 | Survey truncation | `5000` chars | `survey.ts` | Files above this size are truncated. |
 
 ## Provider Examples
