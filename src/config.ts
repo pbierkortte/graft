@@ -11,6 +11,7 @@ export const config = {
   apiBase: env('OPENAI_API_BASE', 'https://api.openai.com/v1'),
   execTimeout: parseInt(env('GRAFT_TIMEOUT', '30'), 10),
   historyWindow: parseInt(env('GRAFT_HISTORY', '20'), 10),
+  stream: env('GRAFT_STREAM', 'true') !== 'false',
   maxRetries: 3,
   maxInner: 10,
 } as const
