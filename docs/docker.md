@@ -80,7 +80,8 @@ docker run -it \
 
 ## Security
 
-The container runs as a non-root user (`graft`, uid 1000) by default.
+The container runs as a non-root user (`node`, uid 1000) by default.
+This is the user built into the `node:24-slim` base image.
 
 Drop all Linux capabilities for additional hardening:
 
