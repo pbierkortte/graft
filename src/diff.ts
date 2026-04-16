@@ -32,6 +32,7 @@ export const applyDiff = (raw: string): ApplyResult => {
   writeFileSync(tmp, diff + '\n')
 
   try {
+    let lastError = 'patch failed'
     for (const flag of [[], ['-p0']]) {
       try {
         execSync(
@@ -39,22 +40,12 @@ export const applyDiff = (raw: string): ApplyResult => {
           { cwd: config.workspace, stdio: 'pipe' }
         )
         return { ok: true, error: '' }
-      } catch {
-        // try next flag
+      } catch (e: unknown) {
+        const err = e as { stderr?: Buffer }
+        lastError = err.stderr?.toString().trim() ?? 'patch failed'
       }
     }
-
-    try {
-      execSync(
-        ['git', 'apply', '--whitespace=nowarn', tmp].join(' '),
-        { cwd: config.workspace, stdio: 'pipe' }
-      )
-    } catch (e: unknown) {
-      const err = e as { stderr?: Buffer }
-      return { ok: false, error: err.stderr?.toString().trim() ?? 'patch failed' }
-    }
-
-    return { ok: false, error: 'patch failed' }
+    return { ok: false, error: lastError }
   } finally {
     try { unlinkSync(tmp) } catch { /* ignore */ }
   }
