@@ -40,6 +40,7 @@ The world state is preserved. The history is not.
 - [Survey](survey.md) — workspace observation, visibility control, context pressure
 - [Docker](docker.md) — container setup, environment, usage
 - [Config](config.md) — environment variables and hard-coded defaults
+- [Workflow](docs/workflow.md) — the issue loop: triage → branch → fix → test → commit → PR → merge
 
 ## Development
 
