@@ -8,7 +8,7 @@ Run Graft in a container.
 docker build -f src/Dockerfile -t graft .
 ```
 
-Image is based on `node:22-slim`.
+Image is based on `node:24-slim`.
 Includes git, curl, jq, bash.
 TypeScript compiles during build.
 
@@ -71,7 +71,7 @@ docker run -it \
 
 ## What's in the Image
 
-- Node.js 22
+- Node.js 24
 - git (for workspace, diff apply, commits)
 - curl, jq (available to _run/ scripts)
 - bash (script execution)
