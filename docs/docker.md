@@ -5,7 +5,7 @@ Run Graft in a container.
 ## Build
 
 ```bash
-docker build -t graft .
+docker build -f docker/Dockerfile -t graft .
 ```
 
 Image is based on `node:22-slim`.
@@ -76,4 +76,4 @@ docker run -it \
 - curl, jq (available to _run/ scripts)
 - bash (script execution)
 - Compiled TypeScript in `/graft/dist/`
-- Default agent file at `/graft/agent.md`
+- No agent file bundled — mount one at runtime (see Custom Agent above)
