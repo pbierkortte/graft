@@ -17,24 +17,27 @@ const parseTimeout = (scriptPath: string): number => {
   return config.execTimeout
 }
 
-const runScript = (scriptPath: string, outDir: string, name: string): Promise<void> =>
+const runScript = (scriptPath: string, outDir: string, name: string, workspace: string): Promise<void> =>
   new Promise((resolve) => {
     const timeout = parseTimeout(scriptPath)
     chmodSync(scriptPath, 0o755)
 
     const proc = spawn('bash', [scriptPath], {
-      cwd: config.workspace,
+      cwd: workspace,
       stdio: ['ignore', 'pipe', 'pipe'],
       detached: true,
     })
 
     let stdout = ''
     let stderr = ''
+    let done = false
 
     proc.stdout?.on('data', (d: Buffer) => { stdout += d.toString() })
     proc.stderr?.on('data', (d: Buffer) => { stderr += d.toString() })
 
     const timer = setTimeout(() => {
+      if (done) return
+      done = true
       try { process.kill(-proc.pid!, 'SIGKILL') } catch { /* ignore */ }
       const log = `[timeout after ${timeout}s]`
       writeFileSync(join(outDir, `${name}.log`), log + '\n')
@@ -42,6 +45,8 @@ const runScript = (scriptPath: string, outDir: string, name: string): Promise<vo
     }, timeout * 1000)
 
     proc.on('close', (code) => {
+      if (done) return
+      done = true
       clearTimeout(timer)
       let log = stdout || ''
       if (stderr) log += `\n[stderr]\n${stderr}`
@@ -53,14 +58,16 @@ const runScript = (scriptPath: string, outDir: string, name: string): Promise<vo
     })
 
     proc.on('error', (e) => {
+      if (done) return
+      done = true
       clearTimeout(timer)
       writeFileSync(join(outDir, `${name}.log`), `[error: ${e.message}]\n`)
       resolve()
     })
   })
 
-export const runMagic = async (): Promise<boolean> => {
-  const runDir = join(config.workspace, '_run')
+export const runMagic = async (workspace: string = config.workspace): Promise<boolean> => {
+  const runDir = join(workspace, '_run')
   if (!existsSync(runDir)) return false
 
   const scripts = readdirSync(runDir)
@@ -69,12 +76,12 @@ export const runMagic = async (): Promise<boolean> => {
 
   if (scripts.length === 0) return false
 
-  const outDir = join(config.workspace, '_output')
+  const outDir = join(workspace, '_output')
   if (existsSync(outDir)) rmSync(outDir, { recursive: true })
   mkdirSync(outDir)
 
   for (const name of scripts) {
-    await runScript(join(runDir, name), outDir, name)
+    await runScript(join(runDir, name), outDir, name, workspace)
   }
 
   rmSync(runDir, { recursive: true })
