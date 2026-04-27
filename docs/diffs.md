@@ -10,6 +10,9 @@ A strict format with explicit context lines, line counts, and file paths.
 The output format of `git diff`, which appears millions of times
 in the training data of every major model.
 
+Patches, search and replace, even writing a new file are all substitution.
+A new file is just substituting an empty file with one.
+
 The system does not fight the model.
 It does not ask for structured JSON tool calls,
 function signature registries, or internal state representations.
